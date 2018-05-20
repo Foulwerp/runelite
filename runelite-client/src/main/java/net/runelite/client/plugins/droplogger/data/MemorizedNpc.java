@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Woox <https://github.com/wooxsolo>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,49 +22,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.client.plugins.droplogger.data;
 
-import java.util.List;
-import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.coords.WorldPoint;
+import lombok.Getter;
+import net.runelite.api.NPC;
+import net.runelite.api.NPCComposition;
 
-import java.util.List;
-
-public interface Tile
+public class MemorizedNpc extends MemorizedActor
 {
-	/**
-	 * Get the decorative object for this tile.
-	 *
-	 * @return
-	 */
-	DecorativeObject getDecorativeObject();
+	@Getter
+	private NPCComposition npcComposition;
 
-	GameObject[] getGameObjects();
-
-	ItemLayer getItemLayer();
-
-	GroundObject getGroundObject();
-
-	WallObject getWallObject();
-
-	SceneTilePaint getSceneTilePaint();
-
-	SceneTileModel getSceneTileModel();
-
-	WorldPoint getWorldLocation();
-
-	Point getRegionLocation();
-
-	LocalPoint getLocalLocation();
-
-	int getPlane();
-
-	boolean hasLineOfSightTo(Tile other);
-
-	/**
-	 * Get all the ground items for this tile
-	 *
-	 * @return
-	 */
-	List<Item> getGroundItems();
+	public MemorizedNpc(NPC npc)
+	{
+		super(npc);
+		NPCComposition composition = npc.getComposition();
+		if (composition == null)
+		{
+			composition = composition.transform();
+		}
+		this.npcComposition = composition;
+	}
 }

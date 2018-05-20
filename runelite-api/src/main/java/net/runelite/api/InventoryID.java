@@ -30,7 +30,8 @@ public enum InventoryID
 	EQUIPMENT(94),
 	BANK(95),
 	PUZZLE_BOX(140),
-	BARROWS_REWARD(141);
+	REWARD_CHEST(141), // Barrows + clue scrolls
+	CHAMBERS_OF_XERIC_CHEST(581);
 
 	private final int id;
 

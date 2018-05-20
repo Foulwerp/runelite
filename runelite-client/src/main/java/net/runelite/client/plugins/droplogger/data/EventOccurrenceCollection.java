@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Woox <https://github.com/wooxsolo>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,49 +22,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.client.plugins.droplogger.data;
 
-import java.util.List;
-import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.coords.WorldPoint;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+import java.time.Instant;
 
-public interface Tile
+public class EventOccurrenceCollection
 {
-	/**
-	 * Get the decorative object for this tile.
-	 *
-	 * @return
-	 */
-	DecorativeObject getDecorativeObject();
+	@Getter
+	private String eventName;
 
-	GameObject[] getGameObjects();
+	@Getter
+	private int count;
 
-	ItemLayer getItemLayer();
+	@Getter
+	@Setter
+	private long value;
 
-	GroundObject getGroundObject();
+	@Getter
+	@Setter
+	private Instant firstOccurrence;
 
-	WallObject getWallObject();
+	@Getter
+	@Setter
+	private Instant lastOccurrence;
 
-	SceneTilePaint getSceneTilePaint();
+	public EventOccurrenceCollection(String eventName)
+	{
+		this.eventName = eventName;
+		this.count = 0;
+		this.value = 0;
+	}
 
-	SceneTileModel getSceneTileModel();
+	public void addOccurrence(Instant instant)
+	{
+		count++;
 
-	WorldPoint getWorldLocation();
-
-	Point getRegionLocation();
-
-	LocalPoint getLocalLocation();
-
-	int getPlane();
-
-	boolean hasLineOfSightTo(Tile other);
-
-	/**
-	 * Get all the ground items for this tile
-	 *
-	 * @return
-	 */
-	List<Item> getGroundItems();
+		if (firstOccurrence == null || firstOccurrence.compareTo(instant) > 0)
+		{
+			firstOccurrence = instant;
+		}
+		if (lastOccurrence == null || lastOccurrence.compareTo(instant) < 0)
+		{
+			lastOccurrence = instant;
+		}
+	}
 }
