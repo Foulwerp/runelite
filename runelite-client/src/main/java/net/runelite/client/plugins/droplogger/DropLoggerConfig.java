@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Woox <https://github.com/wooxsolo>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,49 +22,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.client.plugins.droplogger;
 
-import java.util.List;
-import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.config.Config;
+import net.runelite.client.config.ConfigGroup;
+import net.runelite.client.config.ConfigItem;
 
-import java.util.List;
-
-public interface Tile
+@ConfigGroup(
+	keyName = "droplogger",
+	name = "Drop Logger",
+	description = "Configuration for the drop logging plugin"
+)
+public interface DropLoggerConfig extends Config
 {
-	/**
-	 * Get the decorative object for this tile.
-	 *
-	 * @return
-	 */
-	DecorativeObject getDecorativeObject();
+	@ConfigItem(
+		position = 1,
+		keyName = "hideChambersOfXeric",
+		name = "Hide Chambers of Xeric NPCs",
+		description = "Don't show loot from NPCs inside Chambers of Xeric"
+	)
+	default boolean hideChambersOfXeric()
+	{
+		return true;
+	}
 
-	GameObject[] getGameObjects();
-
-	ItemLayer getItemLayer();
-
-	GroundObject getGroundObject();
-
-	WallObject getWallObject();
-
-	SceneTilePaint getSceneTilePaint();
-
-	SceneTileModel getSceneTileModel();
-
-	WorldPoint getWorldLocation();
-
-	Point getRegionLocation();
-
-	LocalPoint getLocalLocation();
-
-	int getPlane();
-
-	boolean hasLineOfSightTo(Tile other);
-
-	/**
-	 * Get all the ground items for this tile
-	 *
-	 * @return
-	 */
-	List<Item> getGroundItems();
+	@ConfigItem(
+		position = 2,
+		keyName = "hideBarbarianAssault",
+		name = "Hide Barbarian Assault NPCs",
+		description = "Don't show loot from NPCs inside Barbarian Assault"
+	)
+	default boolean hideBarbarianAssault()
+	{
+		return true;
+	}
 }

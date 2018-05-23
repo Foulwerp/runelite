@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Woox <https://github.com/wooxsolo>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,49 +22,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.client.ui.components;
 
-import java.util.List;
-import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.ui.ColorScheme;
 
-import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Component;
 
-public interface Tile
+public class RuneliteListItemRenderer extends JLabel implements ListCellRenderer
 {
-	/**
-	 * Get the decorative object for this tile.
-	 *
-	 * @return
-	 */
-	DecorativeObject getDecorativeObject();
+	@Override
+	public Component getListCellRendererComponent(JList jlist, Object o, int index, boolean isSelected, boolean cellHasFocus)
+	{
+		RuneliteList list = (RuneliteList)jlist;
+		if (isSelected)
+		{
+			setBackground(ColorScheme.BRAND_ORANGE_TRANSPARENT);
+			setForeground(Color.WHITE);
+			setOpaque(true);
+		}
+		else
+		{
+			setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			setOpaque(false);
+		}
+		if (list.getHoveredIndex() == index)
+		{
+			setForeground(Color.WHITE);
+		}
 
-	GameObject[] getGameObjects();
+		setBorder(new EmptyBorder(1, 4, 1, 4));
 
-	ItemLayer getItemLayer();
+		String text = o.toString();
+		setText(text);
 
-	GroundObject getGroundObject();
-
-	WallObject getWallObject();
-
-	SceneTilePaint getSceneTilePaint();
-
-	SceneTileModel getSceneTileModel();
-
-	WorldPoint getWorldLocation();
-
-	Point getRegionLocation();
-
-	LocalPoint getLocalLocation();
-
-	int getPlane();
-
-	boolean hasLineOfSightTo(Tile other);
-
-	/**
-	 * Get all the ground items for this tile
-	 *
-	 * @return
-	 */
-	List<Item> getGroundItems();
+		return this;
+	}
 }

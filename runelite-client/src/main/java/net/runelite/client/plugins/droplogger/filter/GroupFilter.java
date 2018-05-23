@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Woox <https://github.com/wooxsolo>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,49 +22,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api;
+package net.runelite.client.plugins.droplogger.filter;
 
-import java.util.List;
-import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.coords.WorldPoint;
-
-import java.util.List;
-
-public interface Tile
+public enum GroupFilter
 {
-	/**
-	 * Get the decorative object for this tile.
-	 *
-	 * @return
-	 */
-	DecorativeObject getDecorativeObject();
+	ID_NAME_LEVEL,
+	NAME,
+	NAME_LEVEL;
 
-	GameObject[] getGameObjects();
-
-	ItemLayer getItemLayer();
-
-	GroundObject getGroundObject();
-
-	WallObject getWallObject();
-
-	SceneTilePaint getSceneTilePaint();
-
-	SceneTileModel getSceneTileModel();
-
-	WorldPoint getWorldLocation();
-
-	Point getRegionLocation();
-
-	LocalPoint getLocalLocation();
-
-	int getPlane();
-
-	boolean hasLineOfSightTo(Tile other);
-
-	/**
-	 * Get all the ground items for this tile
-	 *
-	 * @return
-	 */
-	List<Item> getGroundItems();
+	public static GroupFilter fromIndex(int index)
+	{
+		switch (index)
+		{
+			case 0: return ID_NAME_LEVEL;
+			case 1: return NAME;
+			case 2: return NAME_LEVEL;
+		}
+		return null;
+	}
 }
